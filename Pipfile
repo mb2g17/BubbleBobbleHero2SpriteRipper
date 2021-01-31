@@ -7,6 +7,7 @@ name = "pypi"
 numpy = "*"
 pillow = "*"
 pyqt5 = "*"
+setuptools = "*"
 
 [dev-packages]
 

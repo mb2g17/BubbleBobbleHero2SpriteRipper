@@ -1,37 +1,7 @@
-import sys
-from struct import unpack
-
 import numpy as np
 from PIL import Image
 
-
-class BinaryBlock:
-    def __init__(self, block):
-        self.block = block
-
-    def get_bytes(self, start_index, end_index):
-        return [self.get_byte(i) for i in range(start_index, end_index)]
-
-    def get_byte(self, index):
-        return self.block[index]
-
-    def get_shorts(self, start_index, end_index):
-        return [self.get_short(i) for i in range(start_index, end_index, 2)]
-
-    def get_short(self, index):
-        (num,) = unpack('h', bytes([self.block[index], self.block[index + 1]]))
-        return num
-
-
-class BinaryFile(BinaryBlock):
-    def __init__(self, path):
-        file_contents = []
-
-        with open(path, mode='rb') as file:
-            file_contents = file.read()
-            file.close()
-
-        super().__init__(file_contents)
+from .binary import BinaryFile
 
 
 class SpriteFile(BinaryFile):
@@ -73,7 +43,7 @@ class SpriteFile(BinaryFile):
         return self.get_short(0)
 
 
-class Sprite():
+class Sprite:
     def __init__(self, bytes, width, height):
         self.bytes = bytes
         self.width = width
@@ -98,49 +68,3 @@ class Sprite():
     def save_image(self, image_path, palette_file):
         img = self.create_image(palette_file)
         img.save(image_path)
-
-
-class PaletteFile(BinaryBlock):
-    def __init__(self, path):
-        file_contents = []
-
-        with open(path, mode='rb') as file:
-            file_contents = file.read()
-            file.close()
-
-        super().__init__(file_contents)
-
-    def get_pixel(self, index):
-        start_index = 4 * index
-        end_index = 4 * index + 3
-        [b, g, r] = self.get_bytes(start_index, end_index)
-        return [r, g, b]
-
-
-sprite_path = sys.argv[1]
-palette_path = sys.argv[2]
-
-palette_file = PaletteFile(palette_path)
-
-sprite_file = SpriteFile(sprite_path)
-
-print(f"Extracting {sprite_file.no_of_sprites()} sprites...")
-
-'''
-for index in range(0, sprite_file.no_of_sprites()):
-	sprite_w = sprite_file.get_sprite_width(index)
-	sprite_h = sprite_file.get_sprite_height(index)
-	print(f"{index} = ({sprite_w},{sprite_h})")
-'''
-
-'''
-sprite_index = 24
-sprite = sprite_file.get_sprite(sprite_index)
-print(f"width: {sprite.width}")
-print(f"height: {sprite.height}")
-sprite.save_image(f"sprite_{sprite_index}.png", palette_file)
-'''
-
-for index in range(0, sprite_file.no_of_sprites()):
-    sprite = sprite_file.get_sprite(index)
-    sprite.save_image(f"sprite_{index}.png", palette_file)
