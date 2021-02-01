@@ -3,8 +3,8 @@ from threading import Thread
 from PyQt5 import uic
 
 from .files import FileLoader
-from bbh2sr.extraction.palette import PaletteFile
-from bbh2sr.extraction.sprite import SpriteFile
+from extraction.palette import PaletteFile
+from extraction.sprite import SpriteFile
 
 
 class MainController:
