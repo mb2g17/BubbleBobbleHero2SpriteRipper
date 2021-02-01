@@ -3,8 +3,8 @@
 ## Table of contents
 * [General info](#general-info)
 * [Releases](#technologies)
+* [Technologies](#technologies)
 * [Setup](#setup)
-* [Developed with](#developed-with)
 * [Images](#images)
 
 # General Info
