@@ -16,16 +16,15 @@ class MainController:
         self.ui.show()
 
     def _load_view(self):
-        ui = uic.loadUi("templates/main.ui")
-        self.ui = ui
+        self.ui = uic.loadUi("templates/main.ui")
 
     def _setup_view(self):
         self.ui.button_load_sprite.clicked.connect(self._on_button_load_sprite_clicked)
         self.ui.button_load_palette.clicked.connect(self._on_button_load_palette_clicked)
 
     def _update_view(self):
-        label_sprite_path_text = self.sprite_file.get_file_name() if self.sprite_file.is_file_loaded() else "No sprite loaded!"
-        label_palette_path_text = self.palette_file.get_file_name() if self.palette_file.is_file_loaded() else "No palette loaded!"
+        label_sprite_path_text = self.sprite_file.filename if self.sprite_file.loaded else "No sprite loaded!"
+        label_palette_path_text = self.palette_file.filename if self.palette_file.loaded else "No palette loaded!"
 
         self.ui.label_sprite_path.setText(label_sprite_path_text)
         self.ui.label_palette_path.setText(label_palette_path_text)

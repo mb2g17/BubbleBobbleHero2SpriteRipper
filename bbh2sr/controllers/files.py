@@ -10,12 +10,6 @@ class FileLoader:
 
         self.path: Optional[str] = None
 
-    def get_file_name(self) -> str:
-        return self._get_file_name() if self.path is not None else ""
-
-    def _get_file_name(self) -> str:
-        return self.path.split('/')[::-1][0] if self.path is not None else ""
-
     def load_file(self, parent: QWidget):
         new_path = self._open_file_dialog(parent)
 
@@ -32,5 +26,10 @@ class FileLoader:
 
         return None if file_name == "" else file_name
 
-    def is_file_loaded(self) -> bool:
+    @property
+    def filename(self) -> str:
+        return self.path.split('/')[::-1][0] if self.path is not None else ""
+
+    @property
+    def loaded(self) -> bool:
         return self.path is not None
