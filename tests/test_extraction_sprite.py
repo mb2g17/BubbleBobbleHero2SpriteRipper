@@ -130,7 +130,7 @@ class TestSprite(unittest.TestCase):
     def set_up_sprite(self):
         self.sprite = self.sprite_file.get_sprite(0)
 
-    def test_create_image(self):
+    def test_sprite_create_image(self):
         image = self.sprite.create_image(self.palette_file)
         self.assertEqual(image.getpixel((0, 0)), (0, 0, 0, 0))
         self.assertEqual(image.getpixel((1, 0)), (204, 187, 170, 255))
