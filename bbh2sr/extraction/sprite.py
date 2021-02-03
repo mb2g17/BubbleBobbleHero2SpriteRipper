@@ -1,3 +1,5 @@
+from io import BytesIO
+
 import numpy as np
 from PIL import Image
 
@@ -62,6 +64,6 @@ class Sprite:
 
         return Image.fromarray(img_array)
 
-    def save_image(self, image_path, palette_file):
+    def save_image(self, image_file_handle: BytesIO, palette_file):
         img = self.create_image(palette_file)
-        img.save(image_path)
+        img.save(image_file_handle)

@@ -62,7 +62,8 @@ class MainController:
                     sprites = sprite_file.get_all_sprites()
 
                     for (index, sprite) in enumerate(sprites):
-                        sprite.save_image(f"sprite-{index}.png", palette_file)
+                        with open(f"sprite-{index}.png", 'wb') as image_file_handle:
+                            sprite.save_image(image_file_handle, palette_file)
 
                     sprite_file_handle.close()
                     palette_file_handle.close()

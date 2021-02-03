@@ -6,9 +6,10 @@ from extraction.palette import PaletteFile
 
 class TestPaletteFile(unittest.TestCase):
     def setUp(self):
-        byte_arr = bytes([0x0, 0x0, 0x0, 0x0,
-                          0xaa, 0xbb, 0xcc, 0x00,
-                          0xFF, 0xFF, 0xFF])
+        byte_arr = bytes([0x0, 0x0, 0x0, 0x0,  # Black
+                          0xaa, 0xbb, 0xcc, 0x00,  # Colour
+                          0xFF, 0xFF, 0xFF  # White
+                          ])
         byte_io = BytesIO()
         byte_io.write(byte_arr)
         byte_io.seek(0)
