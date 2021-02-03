@@ -11,4 +11,4 @@ clean:
 	pipenv --rm
 
 check:
-	@echo tests unimplemented
+	pipenv run python -m unittest discover -v
