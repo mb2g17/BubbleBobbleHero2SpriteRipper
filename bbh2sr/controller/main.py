@@ -54,13 +54,18 @@ class MainController:
             self.ui.button_export_sprites.setEnabled(False)
 
             def export_sprites():
-                sprite_file = SpriteFile(self.sprite_file.path)
-                palette_file = PaletteFile(self.palette_file.path)
+                with open(self.sprite_file.path, 'rb') as sprite_file_handle, \
+                     open(self.palette_file.path, 'rb') as palette_file_handle:
+                    sprite_file = SpriteFile(sprite_file_handle)
+                    palette_file = PaletteFile(palette_file_handle)
 
-                sprites = sprite_file.get_all_sprites()
+                    sprites = sprite_file.get_all_sprites()
 
-                for (index, sprite) in enumerate(sprites):
-                    sprite.save_image(f"sprite-{index}.png", palette_file)
+                    for (index, sprite) in enumerate(sprites):
+                        sprite.save_image(f"sprite-{index}.png", palette_file)
+
+                    sprite_file_handle.close()
+                    palette_file_handle.close()
 
                 self.ui.button_export_sprites.setText("Export Sprites")
                 self.ui.button_export_sprites.setEnabled(True)

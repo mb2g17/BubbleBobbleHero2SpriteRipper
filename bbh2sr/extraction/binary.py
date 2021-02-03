@@ -1,4 +1,5 @@
 from struct import unpack
+from typing import BinaryIO
 
 
 class BinaryBlock:
@@ -20,9 +21,6 @@ class BinaryBlock:
 
 
 class BinaryFile(BinaryBlock):
-    def __init__(self, path):
-        with open(path, mode='rb') as file:
-            file_contents = file.read()
-            file.close()
-
+    def __init__(self, file_handle: BinaryIO):
+        file_contents = file_handle.read()
         super().__init__(file_contents)

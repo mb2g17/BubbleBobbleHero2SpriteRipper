@@ -5,9 +5,6 @@ from .binary import BinaryFile
 
 
 class SpriteFile(BinaryFile):
-    def __init__(self, path):
-        super().__init__(path)
-
     def get_all_sprites(self):
         return [self.get_sprite(i) for i in range(0, self.no_of_sprites())]
 
