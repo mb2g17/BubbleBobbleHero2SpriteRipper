@@ -32,7 +32,31 @@ The prerequisites for this project are:
 - Python 3
 - Pipenv
 
-TBC
+To install the Pipenv environment and all the project's dependencies, input:
+
+```shell
+> git clone https://github.com/mb2g17/BubbleBobbleHero2SpriteRipper.git
+> cd BubbleBobbleHero2SpriteRipper
+> make
+```
+
+To run this project, input:
+
+```shell
+> make run
+```
+
+To execute the test suite, input:
+
+```shell
+> make check
+```
+
+To see all `make` commands, input:
+
+```shell
+> make help
+```
 
 # Images
 

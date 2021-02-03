@@ -1,6 +1,6 @@
-.DEFAULT_GOAL:=help
+all: setup
 
-install: ## Installs Pipenv environment
+setup: ## Installs Pipenv environment
 	pipenv install
 
 run: ## Runs project with installed Pipenv environment
