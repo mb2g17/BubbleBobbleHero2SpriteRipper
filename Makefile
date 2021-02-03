@@ -1,14 +1,17 @@
-all: setup
+.DEFAULT_GOAL:=help
 
-setup:
+install: ## Installs Pipenv environment
 	pipenv install
 
-run:
+run: ## Runs project with installed Pipenv environment
 	cd bbh2sr; \
 	pipenv run python .
 
-clean:
+clean: ## Uninstalls Pipenv environment
 	pipenv --rm
 
-check:
+check: ## Runs test cases in Pipenv environment
 	pipenv run python -m unittest discover -v
+
+help: ## Display this help
+	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m\033[0m\n\nTargets:\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-10s\033[0m %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
