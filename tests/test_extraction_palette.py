@@ -1,7 +1,7 @@
 import unittest
 from io import BytesIO
 
-from extraction.palette import PaletteFile
+from bbh2sr.extraction.palette import PaletteFile
 
 
 class TestPaletteFile(unittest.TestCase):

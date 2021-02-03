@@ -1,8 +1,8 @@
 import unittest
 from io import BytesIO
 
-from extraction.palette import PaletteFile
-from extraction.sprite import SpriteFile
+from bbh2sr.extraction.palette import PaletteFile
+from bbh2sr.extraction.sprite import SpriteFile
 
 
 class TestSpriteFile(unittest.TestCase):
@@ -132,10 +132,10 @@ class TestSprite(unittest.TestCase):
 
     def test_create_image(self):
         image = self.sprite.create_image(self.palette_file)
-        self.assertEquals(image.getpixel((0, 0)), (0, 0, 0, 0))
-        self.assertEquals(image.getpixel((1, 0)), (204, 187, 170, 255))
-        self.assertEquals(image.getpixel((0, 1)), (255, 255, 255, 255))
-        self.assertEquals(image.getpixel((1, 1)), (204, 187, 170, 255))
+        self.assertEqual(image.getpixel((0, 0)), (0, 0, 0, 0))
+        self.assertEqual(image.getpixel((1, 0)), (204, 187, 170, 255))
+        self.assertEqual(image.getpixel((0, 1)), (255, 255, 255, 255))
+        self.assertEqual(image.getpixel((1, 1)), (204, 187, 170, 255))
 
 
 if __name__ == '__main__':
