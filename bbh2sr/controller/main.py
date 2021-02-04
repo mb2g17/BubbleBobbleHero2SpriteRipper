@@ -1,10 +1,12 @@
 from threading import Thread
 
-from PyQt5 import uic
+from PIL import Image
+from PyQt5 import uic, QtGui
 
 from .files import FileLoader
 from extraction.palette import PaletteFile
 from extraction.sprite import SpriteFile
+from .preview import SpritePreviewController
 
 
 class MainController:
@@ -27,6 +29,13 @@ class MainController:
         self.ui.button_load_palette.clicked.connect(self._on_button_load_palette_clicked)
         self.ui.button_export_sprites.clicked.connect(self._on_button_export_sprites_clicked)
 
+        self.sprite_preview_controller = SpritePreviewController(
+            self.ui.label_preview_title,
+            self.ui.label_preview_pixmap,
+            self.ui.frame_preview_parent,
+            self.ui.scrollbar_preview)
+        self.sprite_preview_controller.setup_view()
+
     def _update_view(self):
         label_sprite_path_text = self.sprite_file.filename if self.sprite_file.loaded else "No sprite loaded!"
         label_palette_path_text = self.palette_file.filename if self.palette_file.loaded else "No palette loaded!"
@@ -35,16 +44,22 @@ class MainController:
         self.ui.label_palette_path.setText(label_palette_path_text)
         self.ui.button_export_sprites.setEnabled(self._files_loaded)
 
+        self.sprite_preview_controller.update_view()
+
     @property
     def _files_loaded(self) -> bool:
         return self.sprite_file.loaded and self.palette_file.loaded
 
     def _on_button_load_sprite_clicked(self):
         self.sprite_file.load_file(self.ui)
+        self.sprite_preview_controller.update_files(self.sprite_file, self.palette_file)
+
         self._update_view()
 
     def _on_button_load_palette_clicked(self):
         self.palette_file.load_file(self.ui)
+        self.sprite_preview_controller.update_files(self.sprite_file, self.palette_file)
+
         self._update_view()
 
     def _on_button_export_sprites_clicked(self):
