@@ -1,4 +1,5 @@
 import os
+import webbrowser
 
 from PyQt5 import uic, QtGui
 
@@ -82,7 +83,9 @@ class MainController:
 
     def _on_button_export_sprites_clicked(self):
         self.actions_controller.export_sprites(self.ui.button_export_sprites)
-        # os.startfile(f"./{MainModel.get_model().sprite_file.filename}")
+
+        folder_name = MainModel.get_model().sprite_file.filename.split('.')[0]
+        webbrowser.open(f"{folder_name}")
 
     def _on_scrollbar_preview_value_changed(self, value):
         MainModel.get_model().sprite_preview.selected_sprite = value

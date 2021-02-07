@@ -1,4 +1,5 @@
 import os
+import shutil
 from threading import Thread
 
 from PyQt5.QtWidgets import QPushButton
@@ -18,8 +19,10 @@ class ActionsController:
             button.setText("Exporting sprites...")
             button.setEnabled(False)
 
-            #folder_name = MainModel.get_model().sprite_file.filename
-            # os.makedirs(folder_name)
+            folder_name = MainModel.get_model().sprite_file.filename.split('.')[0]
+            if os.path.isdir(folder_name):
+                shutil.rmtree(f"./{folder_name}")
+            os.makedirs(folder_name)
 
             def export_sprites():
                 with open(model.sprite_file.path, 'rb') as sprite_file_handle, \
@@ -30,8 +33,7 @@ class ActionsController:
                     sprites = sprite_file.get_all_sprites()
 
                     for (index, sprite) in enumerate(sprites):
-                        #with open(f"./{folder_name}/sprite-{index}.png", 'wb') as image_file_handle:
-                        with open("sprite-{index}.png", 'wb') as image_file_handle:
+                        with open(f"./{folder_name}/sprite-{index}.png", 'wb') as image_file_handle:
                             sprite.save_image(image_file_handle, palette_file)
 
                     sprite_file_handle.close()
