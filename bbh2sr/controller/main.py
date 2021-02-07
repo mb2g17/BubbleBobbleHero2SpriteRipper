@@ -38,8 +38,15 @@ class MainController:
         self.sprite_preview_controller.setup_view()
 
     def _update_view(self):
+        # Updates path texts
         label_sprite_path_text = self.sprite_file.filename if self.sprite_file.loaded else "No sprite loaded!"
         label_palette_path_text = self.palette_file.filename if self.palette_file.loaded else "No palette loaded!"
+
+        # Updates sprite/palette colours
+        loaded_sprite = self.sprite_file.loaded
+        loaded_palette = self.palette_file.loaded
+        self.ui.frame_sprite.setStyleSheet(f"background-color: #{'6f6' if loaded_sprite else 'f66'}")
+        self.ui.frame_palette.setStyleSheet(f"background-color: #{'6f6' if loaded_palette else 'f66'}")
 
         self.ui.label_sprite_path.setText(label_sprite_path_text)
         self.ui.label_palette_path.setText(label_palette_path_text)

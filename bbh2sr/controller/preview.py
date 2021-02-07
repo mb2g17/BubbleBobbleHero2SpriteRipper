@@ -100,7 +100,8 @@ class SpritePreviewController:
             width = height * (image_width / image_height)
         return width, height
 
-    def pil2pixmap(self, im: Image):
+    @staticmethod
+    def pil2pixmap(im: Image):
         if im.mode == "RGB":
             r, g, b = im.split()
             im = Image.merge("RGB", (b, g, r))
