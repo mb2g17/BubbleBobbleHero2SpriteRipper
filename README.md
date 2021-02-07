@@ -60,4 +60,6 @@ To see all `make` commands, input:
 
 # Images
 
-TBC
+![](screenshots/ss1.png)
+
+![](screenshots/ss2.png)
