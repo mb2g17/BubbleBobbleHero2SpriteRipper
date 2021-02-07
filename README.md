@@ -46,6 +46,12 @@ To run this project, input:
 > make run
 ```
 
+To package this project into an executable, input:
+
+```shell
+> make package
+```
+
 To execute the test suite, input:
 
 ```shell

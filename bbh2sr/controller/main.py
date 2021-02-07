@@ -29,7 +29,7 @@ class MainController:
         self.ui.show()
 
     def _load_view(self):
-        self.ui = uic.loadUi("templates/main.ui")
+        self.ui = uic.loadUi("assets/templates/main.ui")
 
     def _setup_view(self):
         self.ui.button_load_sprite.clicked.connect(self._on_button_load_sprite_clicked)

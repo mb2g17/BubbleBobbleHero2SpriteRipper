@@ -27,7 +27,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../assets/fire.png</normaloff>../assets/fire.png</iconset>
+    <normaloff>../fire.ico</normaloff>../fire.ico</iconset>
   </property>
   <property name="layoutDirection">
    <enum>Qt::LeftToRight</enum>
@@ -94,7 +94,7 @@
           <enum>Qt::AutoText</enum>
          </property>
          <property name="pixmap">
-          <pixmap>../assets/banner.fw.png</pixmap>
+          <pixmap>../banner.fw.png</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>

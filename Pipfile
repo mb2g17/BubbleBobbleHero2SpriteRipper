@@ -8,6 +8,7 @@ numpy = "*"
 pillow = "*"
 pyqt5 = "*"
 setuptools = "*"
+pyinstaller = "*"
 
 [dev-packages]
 
