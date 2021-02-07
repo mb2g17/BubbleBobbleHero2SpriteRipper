@@ -1,17 +1,24 @@
-from threading import Thread
+import os
 
-from PyQt5 import uic
+from PyQt5 import uic, QtGui
 
-from .files import FileLoader
-from extraction.palette import PaletteFile
-from extraction.sprite import SpriteFile
-from .preview import SpritePreviewController
+from model.model import MainModel
+from model.preview import SpritePreviewMode
+from .actions import ActionsController
+from .files import FileLoader, SpriteLoader, PaletteLoader
+from controller.preview.preview import SpritePreviewController
 
 
 class MainController:
     def __init__(self):
-        self.sprite_file: FileLoader = FileLoader("Load Sprite", "Sprite Files (*.spp);;All Files (*)")
-        self.palette_file: FileLoader = FileLoader("Load Palette", "Palette Files (*.pal);;All Files (*)")
+        model = MainModel.get_model()
+
+        # Sets up file subcontrollers
+        self.sprite_file: FileLoader = SpriteLoader()
+        self.palette_file: FileLoader = PaletteLoader()
+
+        # Sets up action subcontroller
+        self.actions_controller = ActionsController()
 
         self._load_view()
         self._setup_view()
@@ -28,71 +35,60 @@ class MainController:
         self.ui.button_load_palette.clicked.connect(self._on_button_load_palette_clicked)
         self.ui.button_export_sprites.clicked.connect(self._on_button_export_sprites_clicked)
 
-        self.sprite_preview_controller = SpritePreviewController(
-            self.ui.label_preview_title,
-            self.ui.label_preview_pixmap,
-            self.ui.frame_preview_parent,
-            self.ui.scrollbar_preview,
-            self.ui.radio_button_fit,
-            self.ui.radio_button_stretch)
-        self.sprite_preview_controller.setup_view()
+        self.ui.scrollbar_preview.valueChanged.connect(self._on_scrollbar_preview_value_changed)
+        self.ui.radio_button_fit.toggled.connect(self._on_radio_button_clicked)
+        self.ui.radio_button_stretch.toggled.connect(self._on_radio_button_clicked)
+
+        # Sets up sprite preview subcontroller
+        self.sprite_preview_controller = SpritePreviewController(self.ui.label_preview_pixmap,
+                                                                 self.ui.label_preview_title,
+                                                                 self.ui.frame_preview_parent)
 
     def _update_view(self):
-        # Updates path texts
-        label_sprite_path_text = self.sprite_file.filename if self.sprite_file.loaded else "No sprite loaded!"
-        label_palette_path_text = self.palette_file.filename if self.palette_file.loaded else "No palette loaded!"
+        model = MainModel.get_model()
 
-        # Updates sprite/palette colours
-        loaded_sprite = self.sprite_file.loaded
-        loaded_palette = self.palette_file.loaded
-        self.ui.frame_sprite.setStyleSheet(f"background-color: #{'6f6' if loaded_sprite else 'f66'}")
-        self.ui.frame_palette.setStyleSheet(f"background-color: #{'6f6' if loaded_palette else 'f66'}")
+        # Updates path texts
+        label_sprite_path_text = model.sprite_file.filename if model.sprite_file.loaded else "No sprite loaded!"
+        label_palette_path_text = model.palette_file.filename if model.palette_file.loaded else "No palette loaded!"
 
         self.ui.label_sprite_path.setText(label_sprite_path_text)
         self.ui.label_palette_path.setText(label_palette_path_text)
-        self.ui.button_export_sprites.setEnabled(self._files_loaded)
+
+        # Updates sprite/palette colours
+        self.ui.frame_sprite.setStyleSheet(f"background-color: #{model.sprite_file.state_colour}")
+        self.ui.frame_palette.setStyleSheet(f"background-color: #{model.palette_file.state_colour}")
+
+        # Updates export sprites button
+        files_loaded = MainModel.get_model().sprite_file.loaded and MainModel.get_model().palette_file.loaded
+        self.ui.button_export_sprites.setEnabled(files_loaded)
 
         self.sprite_preview_controller.update_view()
 
-    @property
-    def _files_loaded(self) -> bool:
-        return self.sprite_file.loaded and self.palette_file.loaded
-
     def _on_button_load_sprite_clicked(self):
         self.sprite_file.load_file(self.ui)
-        self.sprite_preview_controller.update_files(self.sprite_file, self.palette_file)
+
+        MainModel.get_model().update_sprite_preview_model()
+        self.sprite_preview_controller.reset_scrollbar(self.ui.scrollbar_preview)
 
         self._update_view()
 
     def _on_button_load_palette_clicked(self):
         self.palette_file.load_file(self.ui)
-        self.sprite_preview_controller.update_files(self.sprite_file, self.palette_file)
+
+        MainModel.get_model().update_sprite_preview_model()
+        self.sprite_preview_controller.reset_scrollbar(self.ui.scrollbar_preview)
 
         self._update_view()
 
     def _on_button_export_sprites_clicked(self):
-        if self.sprite_file.loaded and self.palette_file.loaded:
+        self.actions_controller.export_sprites(self.ui.button_export_sprites)
+        # os.startfile(f"./{MainModel.get_model().sprite_file.filename}")
 
-            self.ui.button_export_sprites.setText("Exporting sprites...")
-            self.ui.button_export_sprites.setEnabled(False)
+    def _on_scrollbar_preview_value_changed(self, value):
+        MainModel.get_model().sprite_preview.selected_sprite = value
+        self.sprite_preview_controller.update_view()
 
-            def export_sprites():
-                with open(self.sprite_file.path, 'rb') as sprite_file_handle, \
-                     open(self.palette_file.path, 'rb') as palette_file_handle:
-                    sprite_file = SpriteFile(sprite_file_handle)
-                    palette_file = PaletteFile(palette_file_handle)
-
-                    sprites = sprite_file.get_all_sprites()
-
-                    for (index, sprite) in enumerate(sprites):
-                        with open(f"sprite-{index}.png", 'wb') as image_file_handle:
-                            sprite.save_image(image_file_handle, palette_file)
-
-                    sprite_file_handle.close()
-                    palette_file_handle.close()
-
-                self.ui.button_export_sprites.setText("Export Sprites")
-                self.ui.button_export_sprites.setEnabled(True)
-
-            thread = Thread(target=export_sprites)
-            thread.start()
+    def _on_radio_button_clicked(self):
+        fit = self.ui.radio_button_fit.isChecked()
+        MainModel.get_model().sprite_preview.sprite_preview_mode = SpritePreviewMode.FIT if fit else SpritePreviewMode.STRETCH
+        self.sprite_preview_controller.update_view()

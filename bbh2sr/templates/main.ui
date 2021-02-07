@@ -127,6 +127,9 @@
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QFrame" name="frame_sprite">
+         <property name="styleSheet">
+          <string notr="true">background-color: #6f6</string>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -153,6 +156,9 @@
        </item>
        <item>
         <widget class="QFrame" name="frame_palette">
+         <property name="styleSheet">
+          <string notr="true">background-color: #f66;</string>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -229,6 +235,21 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <property name="spacing">
+              <number>0</number>
+             </property>
              <item row="0" column="0">
               <widget class="QLabel" name="label_preview_pixmap">
                <property name="sizePolicy">
