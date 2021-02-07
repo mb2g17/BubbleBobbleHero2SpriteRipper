@@ -9,7 +9,7 @@ class FileModel:
         self._path: Optional[str] = None
 
     def set_path(self, new_path: Optional[str]):
-        if new_path is not None or new_path != "":
+        if new_path is not None and new_path != '':
             self._path = new_path
 
     @property

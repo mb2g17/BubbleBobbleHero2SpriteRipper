@@ -1,7 +1,6 @@
-import os
 import webbrowser
 
-from PyQt5 import uic, QtGui
+from PyQt5 import uic
 
 from model.model import MainModel
 from model.preview import SpritePreviewMode
@@ -12,8 +11,6 @@ from controller.preview.preview import SpritePreviewController
 
 class MainController:
     def __init__(self):
-        model = MainModel.get_model()
-
         # Sets up file subcontrollers
         self.sprite_file: FileLoader = SpriteLoader()
         self.palette_file: FileLoader = PaletteLoader()
