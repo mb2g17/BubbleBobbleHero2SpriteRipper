@@ -1,33 +1,51 @@
+from enum import Enum
 from typing import List, Optional
 
 from PIL import Image
 from PyQt5 import QtGui
-from PyQt5.QtWidgets import QLabel, QFrame, QScrollBar
+from PyQt5.QtWidgets import QLabel, QFrame, QScrollBar, QRadioButton
 
 from controller.files import FileLoader
 from extraction.palette import PaletteFile
 from extraction.sprite import Sprite, SpriteFile
 
 
+class SpritePreviewMode(Enum):
+    FIT = 0
+    STRETCH = 1
+
+
 class SpritePreviewController:
     def __init__(self, label_preview_title: QLabel,
                  label_preview_pixmap: QLabel,
                  frame_preview_parent: QFrame,
-                 scrollbar_preview: QScrollBar):
+                 scrollbar_preview: QScrollBar,
+                 radio_button_fit: QRadioButton,
+                 radio_button_stretch: QRadioButton):
         self.label_preview_title = label_preview_title
         self.label_preview_pixmap = label_preview_pixmap
         self.frame_preview_parent = frame_preview_parent
         self.scrollbar_preview = scrollbar_preview
+        self.radio_button_fit = radio_button_fit
+        self.radio_button_stretch = radio_button_stretch
 
         self.sprites: Optional[List[Sprite]] = None
         self.palette: Optional[PaletteFile] = None
         self.selected_sprite = 0
+        self.sprite_preview_mode = SpritePreviewMode.FIT
 
     def setup_view(self):
         self.scrollbar_preview.valueChanged.connect(self.on_scrollbar_preview_value_changed)
+        self.radio_button_fit.toggled.connect(self.on_radio_button_clicked)
+        self.radio_button_stretch.toggled.connect(self.on_radio_button_clicked)
 
     def on_scrollbar_preview_value_changed(self, value):
         self.selected_sprite = value
+        self.update_view()
+
+    def on_radio_button_clicked(self):
+        fit = self.radio_button_fit.isChecked()
+        self.sprite_preview_mode = SpritePreviewMode.FIT if fit else SpritePreviewMode.STRETCH
         self.update_view()
 
     def update_view(self):
@@ -54,8 +72,10 @@ class SpritePreviewController:
         max_width = self.frame_preview_parent.width() - 20
         max_height = self.frame_preview_parent.height() - 20
 
-        # width, height = self.calculate_width_and_height_stretch(image.width, image.height, max_width, max_height)
-        width, height = self.calculate_width_and_height_fit(image.width, image.height, max_width, max_height)
+        if self.sprite_preview_mode == SpritePreviewMode.FIT:
+            width, height = self.calculate_width_and_height_fit(image.width, image.height, max_width, max_height)
+        else:
+            width, height = self.calculate_width_and_height_stretch(image.width, image.height, max_width, max_height)
 
         self.label_preview_pixmap.setMaximumWidth(width)
         self.label_preview_pixmap.setMaximumHeight(height)
@@ -106,8 +126,7 @@ class SpritePreviewController:
     @staticmethod
     def extract_sprite_and_palette(sprite_file_loader: FileLoader, palette_file_loader: FileLoader):
         with open(sprite_file_loader.path, 'rb') as sprite_file_handle, \
-             open(palette_file_loader.path, 'rb') as palette_file_handle:
-
+                open(palette_file_loader.path, 'rb') as palette_file_handle:
             sprite_file = SpriteFile(sprite_file_handle)
             palette_file = PaletteFile(palette_file_handle)
 

@@ -1,7 +1,6 @@
 from threading import Thread
 
-from PIL import Image
-from PyQt5 import uic, QtGui
+from PyQt5 import uic
 
 from .files import FileLoader
 from extraction.palette import PaletteFile
@@ -33,7 +32,9 @@ class MainController:
             self.ui.label_preview_title,
             self.ui.label_preview_pixmap,
             self.ui.frame_preview_parent,
-            self.ui.scrollbar_preview)
+            self.ui.scrollbar_preview,
+            self.ui.radio_button_fit,
+            self.ui.radio_button_stretch)
         self.sprite_preview_controller.setup_view()
 
     def _update_view(self):
