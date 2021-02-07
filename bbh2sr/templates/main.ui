@@ -23,7 +23,11 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Bubble Bobble Hero 2 Sprite Ripper</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../assets/fire.png</normaloff>../assets/fire.png</iconset>
   </property>
   <property name="layoutDirection">
    <enum>Qt::LeftToRight</enum>
