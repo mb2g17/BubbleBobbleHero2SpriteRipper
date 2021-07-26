@@ -1,6 +1,7 @@
 ![](banner.fw.png)
 
 [![Build Status](https://drone.matt-barnes.co.uk/api/badges/mb2g17/BubbleBobbleHero2SpriteRipper/status.svg)](https://drone.matt-barnes.co.uk/mb2g17/BubbleBobbleHero2SpriteRipper)
+[![Available on GitHub](https://img.shields.io/badge/Available%20on-GitHub-white?style=flat-square&logo=github)](https://github.com/mb2g17/BubbleBobbleHero2SpriteRipper)
 
 ## Table of contents
 * [General info](#general-info)
@@ -17,7 +18,7 @@ This repository contains sample assets to use this program with.
 
 # Releases
 
-https://github.com/mb2g17/BubbleBobbleHero2SpriteRipper/releases
+https://git.matt-barnes.co.uk/mb2g17/BubbleBobbleHero2SpriteRipper/releases
 
 # Technologies
 
@@ -35,7 +36,7 @@ The prerequisites for this project are:
 To install the Pipenv environment and all the project's dependencies, input:
 
 ```shell
-> git clone https://github.com/mb2g17/BubbleBobbleHero2SpriteRipper.git
+> git clone https://git.matt-barnes.co.uk/mb2g17/BubbleBobbleHero2SpriteRipper.git
 > cd BubbleBobbleHero2SpriteRipper
 > make
 ```
