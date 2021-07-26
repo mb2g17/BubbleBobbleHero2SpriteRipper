@@ -1,0 +1,11 @@
+kind: pipeline
+type: docker
+name: bubble-bobble-hero-2-sprite-ripper
+
+steps:
+    - name: test
+      image: python:3.9.1
+      commands:
+        - pip install pipenv
+        - make
+        - make check
