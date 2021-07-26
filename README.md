@@ -1,6 +1,6 @@
 ![](banner.fw.png)
 
-[![Build Status](https://travis-ci.com/mb2g17/BubbleBobbleHero2SpriteRipper.svg?branch=master)](https://travis-ci.com/mb2g17/BubbleBobbleHero2SpriteRipper)
+[![Build Status](https://drone.matt-barnes.co.uk/api/badges/mb2g17/BubbleBobbleHero2SpriteRipper/status.svg)](https://drone.matt-barnes.co.uk/mb2g17/BubbleBobbleHero2SpriteRipper)
 
 ## Table of contents
 * [General info](#general-info)
