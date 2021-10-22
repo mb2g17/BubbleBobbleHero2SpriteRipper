@@ -1,7 +1,7 @@
 ![](banner.fw.png)
 
 [![Build Status](https://drone.matt-barnes.co.uk/api/badges/mb2g17/BubbleBobbleHero2SpriteRipper/status.svg)](https://drone.matt-barnes.co.uk/mb2g17/BubbleBobbleHero2SpriteRipper)
-[![Available on GitHub](https://img.shields.io/badge/Available%20on-GitHub-white?style=flat-square&logo=github)](https://github.com/mb2g17/BubbleBobbleHero2SpriteRipper)
+[![Available on GitHub](https://img.shields.io/badge/Available%20on-GitHub-white?logo=github)](https://github.com/mb2g17/BubbleBobbleHero2SpriteRipper)
 [![License: GPL v3](https://img.shields.io/badge/Licensed%20under-GPLv3-blue?logo=gnu)](https://www.gnu.org/licenses/gpl-3.0)
 
 ## Table of contents
